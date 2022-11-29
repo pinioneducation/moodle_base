@@ -1,8 +1,6 @@
 <?php
 
 require_once('../../config.php');
-//require_once(dirname(__FILE__).'/lib.php');
-//require($CFG->dirroot.'/local/pinion/functions.php');
 header("Content-Type: application/json;charset=utf-8");
 
 
@@ -26,7 +24,6 @@ if($action!='easylogin'){
 $userId=intval(base64_decode($u));
 
 
-//$r=pinion_authenticate_user_easylogin(intval($userId),$p);
 global $DB;
 $queryArr=[
 	"SELECT A.*,B.password",
