@@ -1,0 +1,19 @@
+<style>
+body.easy-back{
+overflow:hidden;
+}
+#easylogin-interfaz{
+position:fixed!important;
+z-index:100;
+top:33%;
+left:33%;
+}
+</style>
+<div id="easylogin-interfaz" style="display:none">
+	<div class="easylogin-card">
+	<div><h3 id="nameContainer"></h3></div>
+	<input type="number" id="easy-contrasena" placeholder="{{#str}} password, local_easylogin {{/str}}" value="" data-forenter="easy-submit"/>
+	<input type="hidden" id="easy-usr" value="" />
+	<button id="easy-submit">{{#str}} enter, local_easylogin {{/str}}</button>
+	<button id="easy-cancel">{{#str}} back, local_easylogin {{/str}}</button>
+</div>

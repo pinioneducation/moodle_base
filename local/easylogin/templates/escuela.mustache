@@ -1,0 +1,33 @@
+{{!
+    No se usa en demo
+}}
+{{#emptyGrupos}}
+<p>No se encontraron grupos registrados.</p>
+{{/emptyGrupos}}
+{{^emptyGrupos}}
+<div class="btns-grupos">
+    {{#prefirst}}
+        <h5 class='btn-grado'>{{gradoLabel}}</h5>
+        {{#grupos}}
+            {{.}}
+            <div class="btn-grupo grado-{{grado}}">
+                <a class='btn btn-primary' href='{{{permalink}}}grupo={{slug}}{{#lang}}&lang={{{lang}}}{{/lang}}' >
+                    <span>{{nombreCohort}}</span>
+                </a>
+            </div>
+        {{/grupos}}
+    {{/prefirst}}
+
+    {{#grados}}
+        <h5 class='btn-grado'>{{gradoLabel}}</h5>
+        {{#grupos}}
+            {{.}}
+            <div class="btn-grupo grado-{{grado}}">
+                <a class='btn btn-primary' href='{{{permalink}}}grupo={{slug}}{{#lang}}&lang={{{lang}}}{{/lang}}' >
+                    <span>{{nombreCohort}}</span>
+                </a>
+            </div>
+        {{/grupos}}
+    {{/grados}}
+</div>
+{{/emptyGrupos}}

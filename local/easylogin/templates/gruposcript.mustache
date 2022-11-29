@@ -1,0 +1,94 @@
+require(['jquery','PinionSend','PinionToasts','PinionEasyLoginMsgs'], function(jQuery,PinionSend,PinionToasts,PinionEasyLoginMsgs) {
+
+    PinionSend.setAjaxUrl('/local/easylogin/ajax.php');
+
+	let interfaz=jQuery("#easylogin-interfaz");
+    let userEl=jQuery("#easy-usr",interfaz),
+	contrasenaEl=jQuery("#easy-contrasena",interfaz);
+
+
+	function showPopup(e){
+		e.stopImmediatePropagation();
+		e.preventDefault();
+		if(interfaz.css('display')=='block'){return;}
+
+		contrasenaEl.val("");
+
+		let self=jQuery(this);
+		if(parseInt(self.data('suspended'))!=0){return;}
+
+		//interfaz.fadeToggle('slow');
+		jQuery("body").addClass("easy-back");
+
+		interfaz.slideDown(600);
+		userEl.val(self.data("uid"));
+		jQuery("#nameContainer",interfaz).text(self.text());
+
+	}
+
+jQuery(".btns-grupos").on("click",".trigger", showPopup)
+.on("click",".btn-easylogin",function(e){
+	e.preventDefault();
+	jQuery(this).find('.trigger').trigger('click');
+});
+
+
+jQuery("body").prepend(interfaz);
+
+jQuery("#easy-cancel").on("click",function(e){
+	interfaz.slideUp(300);
+	contrasenaEl.val("").text("");
+	userEl.val(0);
+	jQuery("body").removeClass("easy-back");
+});
+
+jQuery("#easy-submit").on("click",function(e){
+	e.stopImmediatePropagation();
+	if(PinionSend.isRunning()){return;}
+	var data= PinionSend.getNewData();
+	if(userEl.val()!="" &&  contrasenaEl.val()){
+		data.append('action','easylogin');
+		data.append('u',userEl.val());
+		data.append('p',contrasenaEl.val());
+		data.append('c',jQuery(".btns-grupos").data('cohortid'));
+		PinionSend.sendRequest(data).then(function(response){
+				//var json=jQuery.parseJSON(jqXHR.responseText);
+				var json=response;
+				if(json && typeof json.s!="undefined"){
+					if(json.s==0){
+						if(json.msg=="INVALID_USERNAME_PASSWORD"){
+							PinionToasts.showToast(PinionEasyLoginMsgs["INVALID_USERNAME_PASSWORD"],0,3000);
+						}
+						if(json.mgs=="MISSING_PARAMETERS"){
+							PinionToasts.showToast(PinionEasyLoginMsgs["MISSING_PARAMETERS"],0,3000);
+						}
+					}
+					if(json.s==-1){
+						PinionToasts.showToast(PinionEasyLoginMsgs["HAS_SESSION_ALERT"],0,5000);
+						//alert("Ya tiene una sesión activa en el sitio.")
+					}
+					if(json.s==1){
+						contrasenaEl.val("").text("");
+						document.location=json.r;
+					}
+				}
+			}
+		);
+	}
+});
+
+jQuery('body').on('keypress','input',function(e){
+		if(e.key == "Enter") {
+		let self=jQuery(this),
+			relEnter=self.data('forenter');
+		if(relEnter==""){return;}
+			self.blur();
+			jQuery("#"+relEnter).focus().trigger('click');
+		}
+	}).on('keyup',function(e){
+		if(e.key=='Escape'){
+			jQuery("#easy-cancel").trigger('click');
+		}
+	});
+
+});

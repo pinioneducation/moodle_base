@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+  <XMLDB PATH="local/easylogin/db" VERSION="2022021600" COMMENT="XMLDB file for local/eadylogin">
+    <TABLES>
+      <TABLE NAME="pinion_easylogin_estudiantes" COMMENT="Tabla para easylogin">
+        <FIELDS>
+          <FIELD NAME="mid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="moodle user id" />
+          <FIELD NAME="cohort_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="" />
+          <FIELD NAME="password" TYPE="char" LENGTH="5" NOTNULL="true" SEQUENCE="false" COMMENT="" />
+	        <FIELD NAME="color" TYPE="int" LENGTH="4" NOTNULL="true" SEQUENCE="false" DEFAULT="0" COMMENT="" />
+        </FIELDS>
+        <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="mid, cohort_id" />
+        </KEYS>
+      </TABLE>
+    </TABLES>
+  </XMLDB>

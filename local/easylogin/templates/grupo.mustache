@@ -1,0 +1,17 @@
+{{#emptyAlumnos}}
+    <p>{{#str}} nostudents, local_easylogin {{/str}}</p>
+{{/emptyAlumnos}}
+{{^emptyAlumnos}}
+    <div class="easylogin-encabezado">
+	    <h3 class="grupo-nombre">{{{nombreGrupo}}}</h3>
+    </div>
+{{/emptyAlumnos}}
+<div class="btns-grupos" data-cohortid="{{cohortid}}">
+    {{#alumnos}}
+        <div class="btn btn-primary btn-easylogin btn-easycolor-{{color}} {{#suspended}}disabled{{/suspended}}">
+        <a href='#' onclick='return false;' class='ui builder_button tb_default_color trigger' data-uid='{{hideID}}' data-suspended='{{suspended}}'>
+        <span class='login-helper color-{{color}}' data-color='{{color}}' data-uid='{{hideID}}'>{{firstname}}</span>
+        </a>
+        </div>
+    {{/alumnos}}
+</div>
